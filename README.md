@@ -48,4 +48,4 @@ This repository contains:
   Torch-based modules for measuring and maximizing informational coherence  
   Applications to AI efficiency, biological resonance, and gravitational analogs
 
-## Repository Structure
+
