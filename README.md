@@ -1,4 +1,4 @@
-# TGU-Coherence-Framework
+# Coherent-Orbital-Precession
 
 **Unified Informational Spin Theory (TGU) – Orbital Precession Corrections and Computational Coherence Simulations**
 
