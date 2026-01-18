@@ -1,0 +1,21 @@
+# requirements.txt
+# Dependências mínimas para o TGU-Coherence-Framework
+# Última atualização: Janeiro 2026
+
+# Core scientific computing
+numpy>=1.24.0
+scipy>=1.10.0
+
+# QuTiP para simulações de spin quântico/informacional
+qutip>=4.7.0
+
+# PyTorch para ICOER, ativações coerentes e AYA-NODE
+torch>=2.0.0
+
+# Data handling & visualization
+pandas>=2.0.0
+matplotlib>=3.7.0
+
+# Optional (para notebooks e desenvolvimento)
+jupyter>=1.0.0
+ipykernel>=6.0.0

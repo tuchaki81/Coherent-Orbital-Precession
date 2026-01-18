@@ -1,0 +1,30 @@
+# reference_gr_precession.txt
+# Valores de referência da precessão do periélio previstos pela Relatividade Geral (GR)
+# Unidade: arcsec/century (arcsegundos por século)
+# Fonte principal: Artigo "A Unified Informational Model for Orbital Precession" (Matuchaki, 2025)
+# Valores aproximados usados nos cálculos e validações do modelo TGU
+# Última atualização: Janeiro 2026
+
+Mercury: 43.03
+Venus:   8.60
+Earth:   3.84
+Mars:    1.35
+
+# Corpo de teste com alta excentricidade
+Icarus:  10.05
+
+# Exemplos ilustrativos para exoplanetas (valores teóricos GR aproximados)
+# Nota: Para exoplanetas, a precessão GR é geralmente pequena e difícil de medir diretamente;
+# estes são valores estimados para consistência com o modelo α do paper.
+WASP-12b:   0.50
+HD 80606b:  1.20
+HAT-P-2b:   2.80
+
+# Observações importantes:
+# - Para Mercúrio, 43.03" é o valor clássico da contribuição relativística (anomalia residual)
+# - Valores de exoplanetas são hipotéticos/estimados para fins de demonstração
+# - Em scripts Python, use esta referência como fallback ou validação
+# - Para maior precisão futura: integrar com dados JPL ou catálogos exoplanetários atualizados
+
+Formato de leitura sugerido em Python:
+body: valor
