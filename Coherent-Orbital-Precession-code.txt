@@ -1,47 +1,39 @@
-import qutip as qt
 import numpy as np
-from scipy.optimize import minimize
 
-def compute_eig_diff(params):
-    J_base, h = params
-    num_spins = 2
-    e = 0.2056  # Eccentricity Mercury
-    a = 0.387098  # Semi-major axis AU
-    strain = e / a
-    J = J_base * (1 + strain)
-    
-    sz1 = qt.tensor(qt.sigmaz(), qt.qeye(2))
-    sz2 = qt.tensor(qt.qeye(2), qt.sigmaz())
-    sx1 = qt.tensor(qt.sigmax(), qt.qeye(2))
-    sx2 = qt.tensor(qt.qeye(2), qt.sigmax())
-    
-    H = -J * sz1 * sz2 + h * (sx1 + sx2)
-    
-    eigenenergies = H.eigenenergies()
-    abs_eig = np.sort(np.abs(eigenenergies))
-    closest = abs_eig[np.argmin(np.abs(abs_eig - 0.0881))]
-    return np.abs(closest - 0.0881)
+# ============================================================
+# MASTER TGU – MERCURY ORBITAL PRECESSION (STATIONARY STATE)
+# Author: Henry Matuchaki
+# Calibration: TGU-GR Convergence Model
+# ============================================================
 
-# Initial guess
-initial_params = [0.0565, 0.0075]
+# 1. ORBITAL PARAMETERS (Mercury)
+a = 0.387              # Semi-major axis (AU)
+e = 0.2056             # Eccentricity
+period = 0.240846      # Orbital period (years)
+precessao_rg = 42.98   # General Relativity Reference (arcsec/century)
 
-# Optimize
-res = minimize(compute_eig_diff, initial_params, method='Nelder-Mead')
-optimal_J_base, optimal_h = res.x
-print("Optimal J_base:", optimal_J_base)
-print("Optimal h:", optimal_h)
-print("Minimal difference:", res.fun)
+# 2. TGU CONSTANTS (Calibrated)
+k = 0.0881             # Universal Informational Coupling
+n = 12                 # Coherence Exponent (Harmonic Structure)
+rs_informational = 0.02391625  # Solar Coherence Radius (AU)
 
-# Recompute and plot (optional)
-strain = 0.2056 / 0.387098
-J = optimal_J_base * (1 + strain)
-H = -J * sz1 * sz2 + optimal_h * (sx1 + sx2)
+# 3. TGU CORE FUNCTIONS
+def calculate_alpha(e, a, k):
+    return 1.0 + k * (e / a)
 
-eigenenergies = H.eigenenergies()
-abs_eig = np.sort(np.abs(eigenenergies))
-print("Eigenenergies absolutos ordenados:", abs_eig)
+def calculate_coherence_factor(r, rs, n):
+    epsilon = 1.0 + (rs / r)**2
+    return epsilon**(-n)
 
-diff = np.abs(abs_eig - 0.0881)
-target_idx = np.argmin(diff)
-print("Mais próximo de 0.0881:", abs_eig[target_idx])
-print("Diferença:", diff[target_idx])
+# 4. EXECUTION
+alpha = calculate_alpha(e, a, k)
+coherence_factor = calculate_coherence_factor(a, rs_informational, n)
+tgu_precession = precessao_rg * alpha * coherence_factor
+
+# 5. OUTPUT
+print("TGU MASTER ANALYSIS – MERCURY")
+print("-" * 30)
+print(f"Informational Gain (Alpha):   {alpha:.6f}")
+print(f"Coherence Resistance (eps^-n): {coherence_factor:.6f}")
+print(f"Final TGU Precession:         {tgu_precession:.2f} arcsec/century")
+print(f"Convergence with GR:          {(tgu_precession / precessao_rg) * 100:.2f}%")
