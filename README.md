@@ -1,134 +1,146 @@
 # Coherent-Orbital-Precession
 
-**Unified Informational Spin Theory (TGU) – Orbital Precession Corrections and Computational Coherence Simulations**
+**Coherence-Based Scalar-Tensor Extension of General Relativity — Computational Implementation**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python](https://img.shields.io/badge/python-3.9%2B-blue)](https://www.python.org/)
-[![QuTiP](https://img.shields.io/badge/QuTiP-4.7+-green)](https://qutip.org/)
-[![Torch](https://img.shields.io/badge/PyTorch-2.0+-orange)](https://pytorch.org/)
+[![NumPy](https://img.shields.io/badge/numpy-1.24%2B-blue)](https://numpy.org/)
 
-This repository implements the **Unified Informational Spin Theory (TGU)** introduced in the paper:
+Computational implementation accompanying the paper:
 
-> **A Unified Informational Model for Orbital Precession: Spin-Informational Corrections from the TGU Framework**  
-> Henry Matuchaki (2025)  
-> Preprint DOI: [10.20944/preprints202502.0514.v3](https://doi.org/10.20944/preprints202502.0514.v3) (updated versions available)
+> **Coherence-Based Scalar-Tensor Extension of General Relativity: Variational Formulation, Observational Bounds, and Predictions for High-Eccentricity Orbital Systems**  
+> Henry Matuchaki (2026)
 
-TGU proposes that gravitational phenomena, such as perihelion precession, emerge from **informational coherence** in spin-structured systems — a pre-physical coherence field preceding classical observables.
+## Theory
 
-The core phenomenological correction is:
+The framework extends General Relativity by introducing a scalar coherence field Φ non-minimally coupled to spacetime curvature through the action:
 
 $$
-\alpha = 1 + k \cdot \frac{e}{a}
+S = \frac{1}{16\pi G}\int d^4x\,\sqrt{-g}\left[(1+\lambda\Phi)\,R - \frac{\omega}{2}\,\nabla_\mu\Phi\,\nabla^\mu\Phi - V(\Phi)\right] + S_m
 $$
 
+Metric variation yields modified Einstein equations with a coherence tensor $C_{\mu\nu} = \lambda(\nabla_\mu\nabla_\nu\Phi - g_{\mu\nu}\Box\Phi)$ that vanishes identically when $\Phi \to 0$, recovering GR exactly.
+
+The effective correction to periapsis precession is:
+
 $$
-\Delta\phi_{\text{TGU}} = \alpha \cdot \Delta\phi_{\text{GR}}
+\Delta\phi = \Delta\phi_{\text{GR}}\,(1 + \delta), \qquad \delta = \lambda_{\text{eff}}^2\,\Xi
 $$
 
-where:
-- \(e\) = orbital eccentricity
-- \(a\) = semi-major axis (in AU)
-- \(k \approx 0.0881\) — the **Matuchaki Parameter** (informational coherence constant)
+where the **orbital asymmetry parameter** is defined as:
 
-This repository contains:
-- Empirical validation scripts for Solar System planets, asteroid Icarus, and high-eccentricity exoplanets
-- Computational derivation of \(k\) via resonant eigenvalues in spin networks
-- Early prototypes for **ICOER** (Informational Coherence Index) and **AYA-NODE** spin-coherent architectures
+$$
+\Xi = \frac{e^2}{1 - e^2}\cdot\frac{r_g}{a}
+$$
 
-## Key Features
+This quantity is manifestly **dimensionless and unit-independent** — it gives the same numerical value whether distances are measured in meters, AU, or Planck lengths.
 
-- **Orbital Precession Predictions**  
-  Reproduces TGU-adjusted precession values for Mercury, Venus, Earth, Mars, Icarus, WASP-12b, HD 80606b, HAT-P-2b, etc.
+## Key Result
 
-- **Spin Network Simulations**  
-  Models orbital systems as coupled spin chains (QuTiP) → derives \(k\) as dominant eigenvalue of coherence/resonance operator  
-  Achieves near-exact match: |λ - 0.0881| < 10⁻⁵ in optimized regimes
+Binary pulsar timing constrains the effective coupling to:
 
-- **ICOER & Coherence Activation**  
-  Torch-based modules for measuring and maximizing informational coherence  
-  Applications to AI efficiency, biological resonance, and gravitational analogs
+$$
+\lambda_{\text{eff}} < 1.95 \quad (95\%\;\text{C.L., from PSR B1913+16})
+$$
 
+At this bound, the predicted corrections are:
+
+| System | e | Ξ | δ | Status |
+|---|---|---|---|---|
+| Mercury | 0.206 | 2.3 × 10⁻⁹ | 8.5 × 10⁻⁹ | Undetectable |
+| PSR B1913+16 | 0.617 | 2.6 × 10⁻⁶ | 1.0 × 10⁻⁵ | At measurement limit |
+| S2 (Sgr A*) | 0.880 | 2.6 × 10⁻⁴ | 1.0 × 10⁻³ | **Within reach of GRAVITY+** |
+| Inner S-star (hyp.) | 0.950 | 7.3 × 10⁻³ | 2.8 × 10⁻² | **Decisive test** |
 
 ## Repository Structure
 
-TGU-Coherence-Framework/
-├── src/
-│   ├── tgu_precession.py           # Core α and Δϕ calculations
-│   ├── spin_network_sim.py         # QuTiP spin models + eigenvalue derivation of k
-│   ├── icoer_torch.py              # ICOER metric + coherence activation layers
-│   └── aya_node_prototype.py       # Early AYA-NODE spin-coherent architecture
-├── data/
-│   ├── orbital_data.csv            # Planetary & exoplanet parameters (e, a, observed precession)
-│   └── reference_gr_precession.txt # GR baseline values
-├── notebooks/
-│   ├── 01_TGU_validation.ipynb     # Reproduction of paper results
-│   ├── 02_k_derivation_spin.ipynb  # Computational derivation of Matuchaki Parameter
-│   └── 03_icoer_experiments.ipynb  # ICOER in neural networks
-├── docs/
-│   └── paper_figures/              # High-res figures from the preprint
-├── requirements.txt
+```
+Coherent-Orbital-Precession/
+├── coherent_orbital_precession.py   # Full implementation + article results
+├── main_revised.tex                 # Article source (LaTeX, RevTeX 4-2)
+├── references.bib                   # BibTeX bibliography
 ├── LICENSE
 └── README.md
-
+```
 
 ## Installation
 
 ```bash
-git clone https://github.com/yourusername/TGU-Coherence-Framework.git
-cd TGU-Coherence-Framework
+git clone https://github.com/tuchaki81/Coherent-Orbital-Precession.git
+cd Coherent-Orbital-Precession
+```
 
-# Recommended: use virtual environment
-python -m venv venv
-source venv/bin/activate  # or venv\Scripts\activate on Windows
+The only dependency is NumPy:
 
-pip install -r requirements.txt
+```bash
+pip install numpy
+```
 
-requirements.txt (minimal):
+## Usage
 
-qutip>=4.7
-numpy>=1.24
-scipy>=1.10
-matplotlib>=3.7
-torch>=2.0
-pandas
+Run the full verification suite:
 
-Quick Start Examples1. Compute TGU Precession for Mercury
+```bash
+python coherent_orbital_precession.py
+```
 
-from src.tgu_precession import tgu_alpha, gr_precession_mercury
+This reproduces all numerical results from the article: observational bounds (Table I), predictions (Table II), dimensional consistency checks, and the S2 star analysis.
 
-e = 0.2056
-a = 0.387098
-k = 0.0881
+### Using as a library
 
-alpha = tgu_alpha(e, a, k)
-delta_phi_tgu = alpha * gr_precession_mercury()  # in arcsec/century
-print(f"α = {alpha:.5f}  →  Δϕ_TGU ≈ {delta_phi_tgu:.2f} arcsec/century")
-
-2. Derive k from Spin Network (refined version)
-
-from src.spin_network_sim import optimize_k_from_spin_hamiltonian
-
-optimal_k, eigenvalues = optimize_k_from_spin_hamiltonian(
-    e=0.2056, a=0.387098, target_k=0.0881
+```python
+from coherent_orbital_precession import (
+    build_catalogue,
+    asymmetry_parameter,
+    fractional_correction,
+    corrected_precession,
+    compute_all_bounds,
+    tightest_bound,
 )
-print(f"Emergent resonant eigenvalue (Matuchaki Parameter): {optimal_k:.6f}")
 
-CitationIf you use this code in your research, please cite:
+# Load astrophysical systems
+catalogue = build_catalogue()
 
-@article{matuchaki2025tgu,
-  author = {Henry Matuchaki},
-  title = {A Unified Informational Model for Orbital Precession: Spin-Informational Corrections from the TGU Framework},
-  year = {2025},
-  doi = {10.20944/preprints202502.0514.v3},
-  url = {https://www.preprints.org/manuscript/202502.0514/v3}
+# Compute asymmetry parameter for any system
+s2 = catalogue["S2"]
+Xi = s2.asymmetry_parameter  # 2.63e-04
+
+# Get observational bound
+bounds = compute_all_bounds(catalogue)
+name, lambda_bound = tightest_bound(bounds)  # PSR B1913+16, 1.95
+
+# Predict correction
+delta = fractional_correction(lambda_bound, Xi)  # 9.98e-04 (0.1%)
+```
+
+## Building the Article
+
+The LaTeX source requires RevTeX 4-2:
+
+```bash
+pdflatex main_revised
+bibtex main_revised
+pdflatex main_revised
+pdflatex main_revised
+```
+
+## Citation
+
+```bibtex
+@article{matuchaki2026coherence,
+  author  = {Henry Matuchaki},
+  title   = {Coherence-Based Scalar-Tensor Extension of General Relativity:
+             Variational Formulation, Observational Bounds, and Predictions
+             for High-Eccentricity Orbital Systems},
+  year    = {2026}
 }
+```
 
-LicenseMIT License – see the LICENSE file for details.Contact & Further ReadingAuthor: Henry Matuchaki  
-X/Twitter: @MatuchakiSilva
-  
-Related works: AYA-NODE prototypes, ICOER metric, spin-informational computing
+## License
 
-Feedback, issues, and pull requests are very welcome!ⵔ◯ᘛ9ᘚ◯ⵔ
+MIT License — see [LICENSE](LICENSE) for details.
 
+## Contact
 
-This README is ready to use — professional, informative, and aligned with your current work (as of Jan 2025/2026). Feel free to tweak the repo name, add your actual GitHub username, or include more badges/links. If you want a shorter version or more emphasis on ICOER/AYA, just let me know! 🚀
+Author: Henry Matuchaki  
+Email: henrymatuchaki@gmail.com
