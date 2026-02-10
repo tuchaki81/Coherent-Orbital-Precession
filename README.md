@@ -113,6 +113,10 @@ name, lambda_bound = tightest_bound(bounds)  # PSR B1913+16, 1.95
 delta = fractional_correction(lambda_bound, Xi)  # 9.98e-04 (0.1%)
 ```
 
+## WEB PAGE
+
+https://claude.ai/public/artifacts/b0b8282a-2651-4ebe-a4b2-37aadc6020aa
+
 ## Building the Article
 
 The LaTeX source requires RevTeX 4-2:
