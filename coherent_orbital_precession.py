@@ -337,3 +337,4 @@ class TestEdgeCases:
         delta = fractional_correction(lambda_eff=1000.0, Xi=1e-4)
         assert np.isfinite(delta)
         assert delta > 0
+
